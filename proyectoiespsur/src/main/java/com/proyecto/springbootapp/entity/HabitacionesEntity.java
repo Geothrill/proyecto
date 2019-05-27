@@ -1,5 +1,7 @@
 package com.proyecto.springbootapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 import javax.persistence.GeneratedValue;
@@ -13,13 +15,14 @@ public class HabitacionesEntity  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int idHabitaciones;
     public String descripcion;
-    public int num_habitacion;
+    public int numHabitacion;
     public String pathImg;
     public String tipo;
-    public double precio;
+    public Double precio;
     public int ocupantes;
 
-    @OneToMany(mappedBy = "habitaciones")
+    @OneToMany(mappedBy = "idHabitaciones")
+    @JsonBackReference
     private List<ReservasEntity> reservas;
 
     public HabitacionesEntity() {
@@ -28,7 +31,7 @@ public class HabitacionesEntity  {
     public HabitacionesEntity(int idHabitaciones, String descripcion, int num_habitacion, String pathImg, String tipo, double precio, int ocupantes, List<ReservasEntity> reservas) {
         this.idHabitaciones = idHabitaciones;
         this.descripcion = descripcion;
-        this.num_habitacion = num_habitacion;
+        this.numHabitacion = num_habitacion;
         this.pathImg = pathImg;
         this.tipo = tipo;
         this.precio = precio;
@@ -53,11 +56,11 @@ public class HabitacionesEntity  {
     }
 
     public int getNum_habitacion() {
-        return num_habitacion;
+        return numHabitacion;
     }
 
     public void setNum_habitacion(int num_habitacion) {
-        this.num_habitacion = num_habitacion;
+        this.numHabitacion = num_habitacion;
     }
 
     public String getPathImg() {
@@ -76,11 +79,11 @@ public class HabitacionesEntity  {
         this.tipo = tipo;
     }
 
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
@@ -105,7 +108,7 @@ public class HabitacionesEntity  {
         return "HabitacionesRepository{" +
                 "idHabitaciones=" + idHabitaciones +
                 ", descripcion='" + descripcion + '\'' +
-                ", num_habitacion=" + num_habitacion +
+                ", num_habitacion=" + numHabitacion +
                 ", pathImg='" + pathImg + '\'' +
                 ", tipo='" + tipo + '\'' +
                 ", precio=" + precio +

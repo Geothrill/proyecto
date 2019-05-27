@@ -4,61 +4,68 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "reservas")
+@Entity(name = "Reservas")
 @Table(name = "reservas")
 public class ReservasEntity  {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    public int id_reserva;
+    public int idReservas;
     @DateTimeFormat
     public Date fechaReserva;
     @DateTimeFormat
     public Date fechaEntrada;
     @DateTimeFormat
     public Date fechaSalida;
-    public double precio;
+    public Double precio;
 
-    @ManyToOne(targetEntity = UsuariosEntity.class)
-    @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
-    public UsuariosEntity usuario;
+    @ManyToOne
+    @JoinColumn(name = "idUsuario", nullable=false)
+    @JsonBackReference
+    public UsuariosEntity idUsuario;
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    @JoinColumn(name = "idReservas")
+    @JsonBackReference
     private ValoracionesEntity idValoraciones;
-    @ManyToOne(targetEntity = HabitacionesEntity.class)
-    @JoinColumn(name = "id_habitaciones")
-    public HabitacionesEntity habitaciones;
-    @ManyToOne(targetEntity = PensionesEntity.class)
-    @JoinColumn(name = "id_pensiones", insertable = false, updatable = false)
-    public PensionesEntity pensiones;
+    @ManyToOne
+    @JoinColumn(name = "idHabitaciones", nullable=false)
+    @JsonBackReference
+    public HabitacionesEntity idHabitaciones;
+    @ManyToOne
+    @JoinColumn(name = "idPension", nullable=false)
+    @JsonBackReference
+    public PensionesEntity idPension;
 
+    
     public ReservasEntity() {
     }
 
-    public ReservasEntity(int id_reserva, Date fechaReserva, Date fechaEntrada, Date fechaSalida, double precio,
+    public ReservasEntity(int idReservas, Date fechaReserva, Date fechaEntrada, Date fechaSalida, double precio,
                           UsuariosEntity usuario, ValoracionesEntity idValoraciones, HabitacionesEntity habitaciones, PensionesEntity pensiones) {
-        this.id_reserva = id_reserva;
+        this.idReservas = idReservas;
         this.fechaReserva = fechaReserva;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.precio = precio;
-        this.usuario = usuario;
+        this.idUsuario = usuario;
         this.idValoraciones = idValoraciones;
-        this.habitaciones = habitaciones;
-        this.pensiones = pensiones;
+        this.idHabitaciones = habitaciones;
+        this.idPension = pensiones;
     }
 
-    public int getId_reserva() {
-        return id_reserva;
+    public int getIdReservas() {
+        return idReservas;
     }
 
-    public void setId_reserva(int id_reserva) {
-        this.id_reserva = id_reserva;
+    public void setIdReservas(int idReservas) {
+        this.idReservas = idReservas;
     }
 
     public Date getFechaReserva() {
@@ -85,21 +92,21 @@ public class ReservasEntity  {
         this.fechaSalida = fechaSalida;
     }
 
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
 
     public UsuariosEntity getUsuario() {
-        return usuario;
+        return idUsuario;
     }
 
     public void setUsuario(UsuariosEntity usuario) {
-        this.usuario = usuario;
+        this.idUsuario = usuario;
     }
 
     public ValoracionesEntity getIdValoraciones() {
@@ -111,19 +118,19 @@ public class ReservasEntity  {
     }
 
     public HabitacionesEntity getHabitaciones() {
-        return habitaciones;
+        return idHabitaciones;
     }
 
     public void setHabitaciones(HabitacionesEntity habitaciones) {
-        this.habitaciones = habitaciones;
+        this.idHabitaciones = habitaciones;
     }
 
     public PensionesEntity getPensiones() {
-        return pensiones;
+        return idPension;
     }
 
     public void setPensiones(PensionesEntity pensiones) {
-        this.pensiones = pensiones;
+        this.idPension = pensiones;
     }
 }
 

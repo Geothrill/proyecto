@@ -4,6 +4,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -18,14 +20,17 @@ public class ValoracionesEntity  {
     public int idValoraciones;
     @DateTimeFormat
     public Date fecha;
-    @ManyToOne(targetEntity = UsuariosEntity.class)
-    @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "idUsuario", nullable = false)
+    @JsonBackReference
     public UsuariosEntity idUsuario;
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    @OneToOne(mappedBy = "idValoraciones", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    @JsonBackReference
     public ReservasEntity idReserva;
     public String comentarios;
     public int valor;
+
 
     public ValoracionesEntity() {
     }
@@ -93,7 +98,7 @@ public class ValoracionesEntity  {
                 "idValoraciones=" + idValoraciones +
                 ", fecha=" + fecha +
                 ", idUsuario=" + idUsuario +
-                ", idReserva=" + idReserva +
+                ", idReservas=" + idReserva +
                 ", comentarios='" + comentarios + '\'' +
                 ", valor=" + valor +
                 '}';

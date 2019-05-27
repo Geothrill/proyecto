@@ -1,5 +1,7 @@
 package com.proyecto.springbootapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ public class UsuariosEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     public int idUsuario;
     public String nombre;
     public String apellidos;
@@ -18,10 +21,12 @@ public class UsuariosEntity  {
     public String password;
 
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "idUsuario")
+    @JsonBackReference
      private List<ReservasEntity> reservas;
 
     @OneToMany(mappedBy = "idUsuario")
+    @JsonBackReference
     private List<ValoracionesEntity> valoraciones;
 
     public UsuariosEntity() {

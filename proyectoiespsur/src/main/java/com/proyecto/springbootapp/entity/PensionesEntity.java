@@ -1,21 +1,25 @@
 package com.proyecto.springbootapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity(name = "pensiones")
-@Table(name = "pensiones")
+@Table(name = "pension")
 public class PensionesEntity  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int idPension;
     public String descripcion;
     public String tipo;
-    public double precio;
+    public Double precio;
 
-    @OneToMany(mappedBy = "pensiones")
+    @OneToMany(mappedBy = "idPension")
+    @JsonBackReference
     private List<ReservasEntity> reservas;
 
     public PensionesEntity() {
@@ -53,11 +57,11 @@ public class PensionesEntity  {
         this.tipo = tipo;
     }
 
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
